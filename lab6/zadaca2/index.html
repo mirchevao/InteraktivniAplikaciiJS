@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="./css/style.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <title>Flicker Search Engine</title>
+    <style type="text/css">
+        #share_button {
+            display: inline !important;
+        }
+
+        .no-close {
+            display: none !important;
+        }
+
+        .elements {
+            padding-bottom: 5px;
+            margin: 5px 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav_container">
+        <div class="global_navigation">
+            <span class="global_nav_button active" id="search_button">Search Engine</span>
+            <span class="global_nav_button" id="share_button">Share</span>
+        </div>
+
+        <div id="search_interface">
+            <h1> Flickr Search </h1>
+            <input type="text" id="searchTerm"/>
+            <button id="search">Search</button>
+        </div>
+        <div id="share_interface">
+            <h1> Share Favorites </h1>
+            <div class="the_icons">
+                <ul class="social" id="selectable">
+                    <li class="delicious ui-widget-content ">
+                        <a href="http://www.delicious.com/"></a>
+                    </li>
+                    <li class="digg ui-widget-content">
+                        <a href="http://digg.com/"></a>
+                    </li>
+                    <li class="facebook ui-widget-content">
+                        <a href="http://www.facebook.com/"></a>
+                    </li>
+                    <li class="flickr ui-widget-content">
+                        <a href="http://www.flickr.com/"></a>
+                    </li>
+                    <li class="linkedin ui-widget-content">
+                        <a href="http://www.linkedin.com/"></a>
+                    </li>
+                    <li class="reddit ui-widget-content">
+                        <a href="http://www.reddit.com/"></a>
+                    </li>
+                    <li class="rss ui-widget-content">
+                        <a href="http://feeds2.feedburner.com/marcofolio"></a>
+                    </li>
+                </ul>
+            </div>
+            <button id="share_dialog_call">SHARE</button>
+        </div>
+    </div>
+</div>
+
+<div class="result_container">
+    <div class="results">
+        <h2> Search results: </h2>
+        <ul class="results_list connect">
+        </ul>
+    </div>
+
+    <div class="favorites">
+        <h2> Favorites: </h2>
+        <ul class="favorites_list connect">
+            <li class="listItem ui-state-default ui-sortable-handle ui-state-disabled"><span>Fill me up!</span></li>
+        </ul>
+    </div>
+</div>
+
+<div class="email_insert" title="Insert your email">
+    <span id="error"><b>Invalid email!<br/> eg. pero@doma.mk</b></span><br/>
+    <span>Email: </span> <br/>
+    <input type="text" id="ins_email"/>
+</div>
+
+<div class="share_dialog" title="Sharing options">
+    <span>Social Network:&nbsp;</span> <span id="social-network-name"></span> <br>
+    <span>URL:&nbsp;</span> <span id="social-network-link"></span> <br>
+    <span>E-mail:&nbsp;</span> <span id="email"></span> <br> <br>
+    <span>Favourites:&nbsp;</span> <br>
+    <span id="pics-title"></span>
+</div>
+</body>
+<script type="text/javascript">
+    var email = "";
+
+    function validateEmail(mail) {
+        var test = /[.]/.test(mail.toString()) && /[@]/.test(mail.toString());
+        if (!test)
+            return false;
+        var monkeyPosition = (mail.toString().indexOf("@", 0));
+        var dotPosition = (mail.toString().indexOf(".", 0));
+        test = test && /[a-zA-z]/.test(mail.toString().charAt(monkeyPosition + 1)) &&
+            /[a-zA-z]/.test(mail.toString().charAt(dotPosition + 1));
+        return test;
+    }
+
+    $(".email_insert").dialog({
+        classes: {
+            "ui-dialog-titlebar-close": "no-close"
+        },
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closable: false,
+        draggable: false,
+        closeOnEscape: false,
+        buttons: {
+            "Ok": function () {
+                email = $("#ins_email").val();
+                if (validateEmail(email)) {
+                    $("#share_interface").show();
+                    $(".results").hide();
+                    $(".favorites").show();
+                    $("#error").hide();
+                    $("#ins_email").val("");
+                    $("#email").html(email);
+                    $(this).dialog("close");
+                } else
+                    $("#error").show();
+            }
+        }
+    });
+
+    $(".share_dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        closable: false,
+        draggable: false,
+        buttons: {
+            "Ok": function () {
+                $("#pics-title").empty();
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    jQuery(document).ready(function () {
+        $("#share_interface").hide();
+        $(".result_container").hide();
+        $("#error").hide();
+
+        $(".results_list, .favorites_list").sortable({
+            connectWith: ".connect",
+            items: "li:not(.ui-state-disabled)"
+        }).disableSelection();
+
+        $("#search_button").on("click", function () {
+            $("#search_interface").show();
+            $("#share_interface").hide();
+            $("#share_button").removeClass("active");
+            $(".favorites").hide();
+            $("#searchTerm").val("");
+            $(".favorites_list").empty();
+            $(".favorites_list").append("" +
+                "<li class='listItem ui-state-default ui-sortable-handle ui-state-disabled'>" +
+                    "<span>Fill me up!</span>" +
+                "</li>");
+            $(".social li a").removeClass("ui-selected");
+            $(this).addClass("active");
+        });
+
+        $("#share_button").on("click", function () {
+            $("#search_interface").hide();
+            $(".results").hide();
+            $(".favorites").hide();
+            if (email.length < 1)
+                $(".email_insert").dialog("open");
+            else {
+                $("#share_interface").show();
+                $(".results").hide();
+                $(".favorites").show();
+            }
+            $("#search_button").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        $("#share_dialog_call").on("click", function () {
+            $(".favorites_list li").each(function (index, value) {
+                var data = $(value).find("span").html();
+                if (data !== "Fill me up!")
+                    $("#pics-title").append(data + " <br>");
+            });
+
+            $(".share_dialog").dialog("open");
+        });
+
+        $(".social li a").on("click", function (event) {
+            event.preventDefault();
+            $(".social li a").removeClass("ui-selected");
+            $(this).addClass("ui-selected");
+            var social_link = $(this).attr("href");
+            var attr = $(this).parent().attr("class");
+            var social_net = attr.toString().split(" ")[0];
+            social_net = social_net.charAt(0).toUpperCase() + social_net.slice(1);
+            $("#social-network-name").html(social_net);
+            $("#social-network-link").html(social_link);
+        });
+
+        $("#search").on("click", function () {
+            var term = $("#searchTerm").val();
+            $(".results").show();
+            $(".favorites").show();
+            $(".results_list").empty();
+            jQuery.ajax({
+                url: "https://www.flickr.com/services/feeds/photos_public.gne?tags=" + term + "+&format=json",
+                dataType: "jsonp",
+                jsonp: "jsoncallback",
+                success: function (data) {
+                    $.each(data.items, function (index, value) {
+                        var link = value.link;
+                        var title = value.title;
+                        var published = value.published;
+                        var image = value.media.m;
+                        $(".results_list").append(
+                            "<li class='ui-widget-content elements'>" +
+                                "<a href='" + link + "' target='_blank'>" +
+                                    "<span>" + title + "</span><br>" +
+                                    "<img src=" + image + "><br>" +
+                                    "<span>" + published + "</span><br>" +
+                                "</a>" +
+                            "</li>");
+                    });
+                }
+            });
+            $(".result_container").show();
+        });
+    });
+</script>
+</html>

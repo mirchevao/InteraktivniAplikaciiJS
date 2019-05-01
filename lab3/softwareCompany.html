@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Software Company | Krstev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style type="text/css">
+        .wrapper {
+            width: 545px;
+            height: 240px;
+            background-color: #76c948;
+            border: 2px dashed #000000;
+        }
+
+        .tab-content {
+            height: 100px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        li {
+            padding: 5px;
+            list-style-type: none;
+        }
+
+        .tab-row {
+            height: 62px;
+        }
+
+        .tab {
+            background-color: #FFFFFF;
+            cursor: default;
+            float: left;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px 10px;
+            margin: 10px 10px;
+        }
+
+        .tab-row div:not(.active) {
+            cursor: pointer;
+        }
+
+        .tab-row div:not(.active):hover {
+            background-color: #c9c9c9;
+            color: #ab1425;
+        }
+
+        h3, h2 {
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        #groups {
+            width: 350px;
+            border: 1px solid #000000;
+            background-color: #ffdafe;
+        }
+
+        #accordion1 {
+            border-bottom: 1px solid #000000;
+        }
+
+        #accordion2, #accordion3 {
+            border-top: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+        }
+
+        #accordion1, #accordion2, #accordion3 {
+            padding: 2px 5px;
+            background-color: #fcffb0;
+            cursor: pointer;
+            font-style: italic;
+        }
+
+        .groups-content {
+            background-color: #d1fff3;
+        }
+
+        .selected {
+            font-weight: bold;
+            background-color: #b5ffac !important;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="tab-row">
+        <div id="1" class="tab active">Медицина</div>
+        <div id="2" class="tab">Образование</div>
+        <div id="3" class="tab">Сметководство</div>
+        <div id="4" class="tab">Игри</div>
+    </div>
+
+    <div class="tab-content">
+        <div id="tab1" class="content active">
+            <ul>
+                <li>MedIm</li>
+                <li>MedIA</li>
+                <li>FINKI-Med</li>
+            </ul>
+        </div>
+
+        <div id="tab2" class="content">
+            <ul>
+                <li>FINKI-Edu</li>
+                <li>Edu-Buddy</li>
+                <li>FINKI-LE</li>
+                <li>FINKI-Math</li>
+            </ul>
+        </div>
+
+        <div id="tab3" class="content">
+            <ul>
+                <li>eTax</li>
+                <li>FINKI-Tax</li>
+                <li>Tax-All</li>
+                <li>mySalary</li>
+            </ul>
+        </div>
+
+        <div id="tab4" class="content">
+            <ul>
+                <li>FINKI-game</li>
+                <li>Grelima</li>
+                <li>Edaolith</li>
+                <li>Foessa</li>
+                <li>Jeroen</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div id="groups">
+    <h3 id="accordion1" class="header">Тим</h3>
+    <div class="groups-content">
+        Алберт Ајнштајн<br>
+        Ален Тјуринг<br>
+        Архимед
+    </div>
+    <h3 id="accordion2" class="header">Претставништва</h3>
+    <div class="groups-content">
+        Скопје<br>
+        Прилеп<br>
+        Велес
+    </div>
+    <h3 id="accordion3" class="header">Контакт</h3>
+    <div class="groups-content">
+        Ул. Есенска 24/5 1000 Скопје<br>
+        +38921234567<br>
+        finkiit@iaispit.com
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".tab-content .content:not(.active)").hide();
+        $(".tab-row .active").css({
+            "background": "#c9c9c9",
+            "fontStyle": "italic"
+        });
+        $(".tab-row .tab").click(function () {
+            var element = "#tab" + $(this).attr("id");
+            $(".tab-content .content").removeClass("active");
+            $(".tab-row div").removeClass("active");
+            $(element).addClass("active");
+            $(this).addClass("active");
+            $(element).show();
+            $(".tab-content .content:not(.active)").hide();
+            $(".tab-row div").css({
+                "background": "#FFFFFF",
+                "fontStyle": "normal"
+            });
+            $(".tab-row .active").css({
+                "background": "#c9c9c9",
+                "fontStyle": "italic"
+            });
+        });
+        $(".groups-content").hide();
+        $("#groups").find("h3").click(function () {
+            if ($(this).next().css("display") === "none") {
+                $(this).next().slideDown("slow");
+                $(this).addClass("selected");
+            }
+            else {
+                $(this).next().slideUp("slow");
+                $(this).removeClass("selected");
+            }
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabela so dolgovi | Krstev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        table {
+            display: block;
+            width: 215px;
+            margin: 0 auto;
+            margin-top: 20px;
+            border: 1px solid #000000;
+        }
+
+        td {
+            padding: 2px;
+        }
+
+        th {
+            text-align: left;
+            background-color: #ff6e62;
+        }
+
+        .accept {
+            background-color: #00f700;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Име</th>
+        <th>Презиме</th>
+        <th>Состојба</th>
+    </tr>
+
+    <tr>
+        <td>Петко</td>
+        <td>Петков</td>
+        <td>Задоволува</td>
+    </tr>
+
+    <tr>
+        <td>Петко</td>
+        <td>Петков</td>
+        <td>Незадоволува</td>
+    </tr>
+
+    <tr>
+        <td>Петко</td>
+        <td>Петков</td>
+        <td>Незадоволува</td>
+    </tr>
+
+    <tr>
+        <td>Петко</td>
+        <td>Петков</td>
+        <td>Незадоволува</td>
+    </tr>
+
+    <tr>
+        <td>Петко</td>
+        <td>Петков</td>
+        <td>Задоволува</td>
+    </tr>
+
+    <tr>
+        <td>Петко</td>
+        <td>Петков</td>
+        <td>Задоволува</td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('tr:contains("Задоволува")').addClass("accept");
+    })
+</script>
+</body>
+</html>

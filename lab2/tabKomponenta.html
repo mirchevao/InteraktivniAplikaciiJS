@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tab component | Krstev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .text {
+            background-color: #b2e5ff;
+        }
+
+        #content {
+            margin-left: 10px;
+            width: 500px;
+            border-bottom: 1px solid #192DA4;
+            border-left: 1px solid #192DA4;
+        }
+
+        #tabs {
+            margin-left: 10px;
+            width: 500px;
+            height: 57px;
+            background-color: #f0ef09;
+            border: 1px solid #B3BC67;
+        }
+
+        #header {
+            display: block;
+            font-style: italic;
+            margin-left: 20px;
+            font-size: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .buttons {
+            padding: 2px;
+            margin-left: 5px;
+            margin-top: 3px;
+            text-align: left;
+            width: 100px;
+            border: 1px solid #B3BC67;
+            background-color: #fffaad;
+            font-style: italic;
+        }
+
+        #tabs > input:nth-child(2) {
+            margin-left: 10px;
+        }
+
+        .active {
+            font-weight: bold;
+            background-color: #e5fff6;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="tabs">
+    <span id="header">Custom tab </span>
+    <input class="buttons active" type="button" name="openStart" value="Open start">
+    <input class="buttons" type="button" name="connect" value="Connect">
+    <input class="buttons" type="button" name="pinApps" value="Pin apps">
+</div>
+
+<div id="content">
+    <div id="openStart" class="text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et ultrices erat. In euismod purus blandit
+        volutpat venenatis. Sed sit amet condimentum enim. Sed id mi tincidunt massa egestas facilisis vel eget diam.
+        Donec sit amet tempor dolor, dignissim accumsan mi. Aliquam nec diam neque. Sed eu lobortis sapien.
+        <br>
+        Phasellus eu felis diam. Duis facilisis arcu nec lectus porttitor, in blandit lectus faucibus. Sed feugiat
+        vehicula est. Nam vitae scelerisque odio. Quisque risus est, finibus vel semper at, dapibus quis mi. Mauris ut
+        maximus magna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc
+        ultricies elit in lacus pulvinar lobortis. Nullam interdum ante ullamcorper massa bibendum, ut lobortis diam
+        vestibulum. Mauris ut elementum diam. Maecenas suscipit egestas leo vitae pellentesque. Integer interdum libero
+        sapien, et iaculis sem pharetra quis. Integer congue ligula nulla, ac dapibus ante tempor ut. Sed pharetra urna
+        elit, a finibus odio luctus quis. Aliquam auctor augue at quam tristique, sed consequat metus sagittis.
+        Curabitur placerat egestas aliquet.
+    </div>
+    <div id="connect" class="text hidden">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et ultrices erat. In euismod purus blandit
+        volutpat venenatis. Sed sit amet condimentum enim. Sed id mi tincidunt massa egestas facilisis vel eget diam.
+        Donec sit amet tempor dolor, dignissim accumsan mi. Aliquam nec diam neque. Sed eu lobortis sapien.
+        <br>
+        Fusce ac massa in ligula pulvinar tincidunt. Donec sit amet porttitor nibh. Cras laoreet, ipsum feugiat pharetra
+        efficitur, sem erat imperdiet ligula, ut commodo lacus massa in dui. In quis ullamcorper enim. Suspendisse
+        hendrerit velit nisl, scelerisque dictum mauris rhoncus vel. Donec non facilisis dolor. Maecenas accumsan felis
+        vitae nibh congue facilisis. Uttae tortor ac libero euismod tempus sed a tellus. Quisque eu mattis neque.
+        Aliquam venenatis dictum libero, quis porta nulla. In viverra hendrerit metus, nec tempus orci ullamcorper et.
+        In sed velit urna. Morbi nec ipsum sapien. Vestibulum semper est ac nibh sollicitudin sodales. Nunc rutrum
+        blandit elit, eu tincidunt massa faucibus eget. Nunc vel malesuada arcu.
+    </div>
+
+    <div id="pinApps" class="text hidden">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et ultrices erat. In euismod purus blandit
+        volutpat venenatis. Sed sit amet condimentum enim. Sed id mi tincidunt massa egestas facilisis vel eget diam.
+        Donec sit amet tempor dolor, dignissim accumsan mi. Aliquam nec diam neque. Sed eu lobortis sapien.
+        <br>
+        Maecenas malesuada nec lorem id vestibulum. Praesent lectus elit, eleifend sed magna in, tristique condimentum
+        dolor. Etiam tristique ultricies turpis, nec molestie est ultrices quis. Quisque rutrum id nunc nec rhoncus.
+        Nulla dictum lacinia ex sit amet maximus. Morbi ullamcorper augue nec nisi pretium, sed aliquet leo imperdiet.
+        Sed sodales neque vitae urna pulvinar dictum. Quisque molestie fermentum molestie. Vivamus nec lacinia est.
+        Phasellus blandit est tellus, vitae condimentum massa luctus id. Proin faucibus vehicula finibus. Ut id blandit
+        mauris.
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#tabs").find("input").click(function () {
+            $("input").removeClass("active");
+            $(this).addClass("active");
+            var attr = $(this).attr("name");
+            $("#content div").addClass("hidden");
+            $("#content " + "#" + attr).removeClass("hidden");
+        })
+    });
+</script>
+</body>
+</html>

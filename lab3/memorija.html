@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Memorija | Kostadin Krstev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="row">
+    <div id="tile1"><h3>1</h3><span>Carl Cox</span></div>
+    <div id="tile2"><h3>2</h3><span>Avicii</span></div>
+    <div id="tile3"><h3>3</h3><span>Tiesto</span></div>
+    <div id="tile4"><h3>4</h3><span>Tiesto</span></div>
+</div>
+<div class="row">
+    <div id="tile5"><h3>5</h3><span>Eminem</span></div>
+    <div id="tile6"><h3>6</h3><span>PSY</span></div>
+    <div id="tile7"><h3>7</h3><span>Avicii</span></div>
+    <div id="tile8"><h3>8</h3><span>PSY</span></div>
+</div>
+<div class="row">
+    <div id="tile9"><h3>9</h3><span>Suzanitta</span></div>
+    <div id="tile10"><h3>10</h3><span>Eminem</span></div>
+    <div id="tile11"><h3>11</h3><span>Krisko</span></div>
+    <div id="tile12"><h3>12</h3><span>BIG SHAQ</span></div>
+</div>
+<div class="row">
+    <div id="tile13"><h3>13</h3><span>Krisko</span></div>
+    <div id="tile14"><h3>14</h3><span>BIG SHAQ</span></div>
+    <div id="tile15"><h3>15</h3><span>Carl Cox</span></div>
+    <div id="tile16"><h3>16</h3><span>Suzanitta</span></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".row").css({
+            "width": 600 + "px",
+            "float": "left",
+            "clear": "both"
+        });
+
+        $(".row div").css({
+            "width": 100 + "px",
+            "height": 100 + "px",
+            "margin": 10 + "px",
+            "padding": 10 + "px",
+            "float": "left",
+            "textAlign": "center",
+            "background": "linear-gradient(#1E5799, #7db9e8)",
+            "color": "#FFFFFF",
+            "lineHeight": 55 + "px",
+            "border": "2px solid #fc0505",
+            "fontSize": 1.4 + "em",
+            "cursor": "pointer"
+        });
+
+        $(".row div:nth-child(2n + 1)").css({
+            "border": "2px solid #000000"
+        });
+
+        $(".row div").hover(function () {
+            $(this).css({
+                "color": "#526EBF",
+                "background": "#58BF39"
+            })
+        }, function () {
+            $(this).css({
+                "color": "#FFFFFF",
+                "background": "linear-gradient(#1E5799, #7DB9E8)"
+            })
+        });
+
+        $(".row div span").css({
+            "display": "none"
+        });
+
+        var open = false;
+        var first;
+
+        $(".row div").click(function () {
+            $(this).find("h3").hide();
+            $(this).find("span").show();
+            if (!open) {
+                first = "#" + $(this).attr("id");
+                open = true;
+            }
+            else {
+                var second = "#" + $(this).attr("id");
+                if (first === second) {
+                    $(first).find("h3").show(0);
+                    $(first).find("span").hide(0);
+                }
+                else if ($(first).find("span").html() === $(second).find("span").html()) {
+                    $(first).css({
+                        "cursor": "default",
+                        "background": "#9a968b"
+                    });
+                    $(second).css({
+                        "cursor": "default",
+                        "background": "#9a968b",
+                        "color": "#FFFFFF"
+                    });
+                    $(second).off();
+                    $(first).off();
+                } else {
+                    // hide the first div
+                    $(first).find("h3").delay(500).show(0);
+                    $(first).find("span").delay(500).hide(0);
+
+                    // hide the second div
+                    $(second).find("h3").delay(500).show(0);
+                    $(second).find("span").delay(500).hide(0);
+                }
+                open = false;
+            }
+        });
+    });
+</script>
+</body>
+</html>

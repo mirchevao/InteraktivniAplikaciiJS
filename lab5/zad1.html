@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zadaca 1 | Krstev</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style type="text/css">
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        td, tr, span, table {
+            padding: 0;
+            margin: 0;
+        }
+
+        #header-row {
+            background-color: #d6d6d6;
+            font-weight: bold;
+        }
+
+        table {
+            border: 0.5px solid #f1f1f1;
+            border-collapse: collapse;
+        }
+
+        td {
+            border-right: 1px solid #f1f1f1;
+            padding: 5px 10px;
+        }
+
+        input[type='button'] {
+            padding: 5px 5px;
+            font-size: 15px;
+            border-radius: 5px;
+            background-color: #f3f3f3;
+            border: 1px solid #b9b9b9;
+        }
+    </style>
+</head>
+<body>
+<table id="flights-table">
+    <tr id="header-row">
+        <td><span>Шифра</span></td>
+        <td><span>Авиопревозник</span></td>
+        <td><span>До</span></td>
+        <td><span>Класа</span></td>
+    </tr>
+    <tr>
+        <td><span>12331</span></td>
+        <td><span>Wizz Air</span></td>
+        <td><span>London</span></td>
+        <td><span>Бизнис</span></td>
+
+    </tr>
+</table>
+
+<br>
+
+<input id="dodadi-let" type="button" value="Додади нова ставка">
+
+<div id="modal">
+    <small class="check">Сите полиња се задолжителни.</small>
+    <br class="check"><br class="check">
+    <small class="validate">Шифрата мора да биде составена само од цифри</small>
+    <br class="validate"><br class="validate">
+    <label for="shifra">Шифра</label><br>
+    <input id="shifra" type="text"><br><br>
+    <label for="avioprevoznik">Авиопревозник</label><br>
+    <input id="avioprevoznik" type="text"><br><br>
+    <label for="do">До</label><br>
+    <input id="do" type="text"><br><br>
+    <span>Категорија</span><br>
+    <select id="klasa">
+        <option>Бизнис</option>
+        <option>Економска</option>
+    </select>
+</div>
+
+<script type="text/javascript">
+    $("#modal").dialog({
+        autoOpen: false,
+        modal: true,
+        draggable: false,
+        width: 400,
+        title: "Create new flight",
+        resizable: false,
+        buttons: {
+            "Додади": function () {
+                var code = $("#shifra").val();
+                var company = $("#avioprevoznik").val();
+                var city = $("#do").val();
+                var klasa = $("#klasa").find("option:selected").text();
+                $("#flights-table").append("<tr>" +
+                    "<td>" + code + "</td>" +
+                    "<td>" + company + "</td>" +
+                    "<td>" + city + "</td>" +
+                    "<td>" + klasa + "</td>" +
+                    "</tr>");
+                clearFields();
+                $(this).dialog("close");
+            },
+            "Откажи": function () {
+                clearFields();
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        $(".validate").hide();
+        $("#dodadi-let").on("click", function () {
+            $("#modal").dialog("open");
+            checkStatus();
+        });
+        $("#modal").keyup(function () {
+            checkStatus();
+        })
+    });
+
+    function checkStatus() {
+        if ($("#shifra").val().length < 1 || $("#avioprevoznik").val().length < 1
+            || $("#do").val().length < 1) {
+            $(":button:contains('Додади')").prop("disabled", true).addClass("ui-state-disabled");
+            $(".validate").hide();
+            $(".check").show();
+            $("#modal").dialog("open");
+        } else {
+            $(".check").hide();
+            if (validatePassword($("#shifra").val())) {
+                $(".validate").hide();
+                $(":button:contains('Додади')").prop("disabled", false).removeClass("ui-state-disabled");
+            } else
+                $(".validate").show();
+            $("#modal").dialog("open");
+        }
+    }
+
+    function clearFields() {
+        $("#shifra").val("");
+        $("#avioprevoznik").val("");
+        $("#do").val("");
+    }
+
+    function validatePassword(password) {
+        return $.isNumeric(password);
+    }
+</script>
+</body>
+</html>

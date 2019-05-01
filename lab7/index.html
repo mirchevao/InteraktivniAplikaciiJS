@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dj Gear Store</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        var players = [
+            {
+                code: 7,
+                model: "Pioneer CDJ 2000",
+                image: "",
+                price: 1600,
+                edit: false
+            },
+            {
+                code: 777,
+                model: "Pioneer CDJ 1000",
+                image: "",
+                price: 1000,
+                edit: false
+            },
+            {
+                code: 7777,
+                model: "Pioneer CDJ 800",
+                image: "",
+                price: 990,
+                edit: false
+            }
+
+        ];
+
+        var mixers = [
+            {
+                code: 230,
+                model: "Pioneer DJM 2000",
+                image: "",
+                price: 2300,
+                edit: false
+            },
+            {
+                code: 420,
+                model: "Pioneer DJM 1000",
+                image: "",
+                price: 1800,
+                edit: false
+            },
+            {
+                code: 970,
+                model: "Pioneer DJM 800",
+                image: "",
+                price: 1600,
+                edit: false
+            }
+
+        ];
+    </script>
+    <style>
+        * {
+            font-family: Verdana, serif;
+        }
+
+        h1 {
+            margin-top: 0 !important;
+        }
+
+        ul {
+            list-style-type: none !important;
+        }
+
+        li span {
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .listItem {
+            width: 35%;
+            height: 50px;
+            text-align: center;
+            cursor: crosshair;
+        }
+
+        .global_navigation {
+            width: 40%;
+            background: #1f1f1f;
+            color: white;
+            font-size: 25px;
+            font-family: Verdana, sans-serif;
+        }
+
+        .global_nav_button {
+            padding: 5px;
+            background: #8f8f8f;
+        }
+
+        .active {
+            padding: 5px;
+            background: #2e2e2e;
+            cursor: pointer;
+            color: #FE2E2E;
+        }
+
+        .global_nav_button:hover {
+            background: #2e2e2e;
+            cursor: pointer;
+            color: #FE2E2E;
+        }
+
+        .bolded {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="global_navigation">
+    <span class="global_nav_button active" id="players_button">Players</span>
+    <span class="global_nav_button" id="mixers_button">Mixers</span>
+    <span class="global_nav_button" id="basket_button">Basket</span>
+</div>
+
+<div class="main_content">
+    <div id="players">
+        <ul id="pleeri" class="connect">
+        </ul>
+    </div>
+
+    <div id="mixers">
+        <ul id="mikseri" class="connect">
+        </ul>
+    </div>
+
+    <div id="basket">
+        <h3>Shoping&nbsp;basket</h3>
+        <ul id="kosnica" class="connect">
+            <li class="listItem ui-state-default ui-sortable-handle ui-state-disabled">
+                <span>Fill&nbsp;me&nbsp;up!</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="global_navigation">FINKI&nbsp;Dj&nbsp;Gear&nbsp;Store</div>
+</body>
+<script type="text/javascript">
+    function insertPlayers(players) {
+        $.each($(players), function (index, element) {
+            $("#pleeri").append(
+                "<li class='listItem'>" +
+                    "<small>" + element.code + "&nbsp;&nbsp;&nbsp;</small>" +
+                    "<span class='bolded'>" + element.model + "&nbsp;&nbsp;&nbsp;</span>" +
+                    "<small>" + element.price + "</small>" +
+                "</li>")
+        });
+    }
+
+    function insertMixers(mixers) {
+        $.each($(mixers), function (index, element) {
+            $("#mikseri").append(
+                "<li class='listItem'>" +
+                    "<small>" + element.code + "&nbsp;&nbsp;&nbsp;</small>" +
+                    "<span class='bolded'>" + element.model + "&nbsp;&nbsp;&nbsp;</span>" +
+                    "<small>" + element.price + "</small>" +
+                "</li>"
+            );
+        })
+    }
+
+    $(document).ready(function () {
+        $("#mixers").hide();
+
+        insertPlayers(players);
+        insertMixers(mixers);
+
+        $("#mikseri, #pleeri, #kosnica").sortable({
+            items: "li:not(.ui-state-disabled)",
+            connectWith: ".connect"
+        }).disableSelection();
+
+        $("#players_button, #mixers_button, #basket_button").on("click", function () {
+            var selected = "#" + $(this).attr("id");
+            var idx = selected.toString().indexOf("_");
+            var id = selected.toString().substr(0, idx);
+            $(".global_navigation span").removeClass("active");
+            $(selected).addClass("active");
+            $(".main_content div").hide();
+            $("#basket").show();
+            $(id).show();
+        });
+    });
+</script>
+</html>

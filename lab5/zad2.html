@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zadaca 2 | Krstev</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style type="text/css">
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        td, tr, span, table {
+            padding: 0;
+            margin: 0;
+        }
+
+        table {
+            border: 0.5px solid #f1f1f1;
+            border-collapse: collapse;
+        }
+
+        td {
+            border-right: 1px solid #f1f1f1;
+            padding: 5px 10px;
+        }
+
+        input[type='button'] {
+            padding: 5px 5px;
+            font-size: 15px;
+            border-radius: 5px;
+            background-color: #f3f3f3;
+            border: 1px solid #b9b9b9;
+        }
+    </style>
+</head>
+<body>
+<label for="let">Пребарај:</label><br>
+<input id="let" type="text"><br>
+<label for="datum-od">Датум од</label><br>
+<input id="datum-od" type="text"><br>
+<label for="datum-do">Датум до</label><br>
+<input id="datum-do" type="text"><br>
+
+<br>
+
+<input id="rezerviraj-let" type="button" value="Резервирај лет">
+
+<br><br><br>
+
+<table id="flights-table">
+    <thead>
+    <tr class="ui-widget-header">
+        <td><span>Шифра</span></td>
+        <td><span>Авиопревозник</span></td>
+        <td><span>До</span></td>
+        <td><span>Класа</span></td>
+        <td><span>Датум од</span></td>
+        <td><span>Датум до</span></td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>12331</td>
+        <td>Wizz Air</td>
+        <td>London</td>
+        <td>Бизнис</td>
+        <td>11/11/2015</td>
+        <td>11/23/2015</td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+<input id="dodadi-let" type="button" value="Додади нова ставка">
+
+<div id="modal">
+    <small class="check">Сите полиња се задолжителни.</small>
+    <br class="check"><br class="check">
+    <small class="validate">Шифрата мора да биде составена само од цифри</small>
+    <br class="validate"><br class="validate">
+    <label for="shifra">Шифра</label><br>
+    <input id="shifra" type="text"><br><br>
+    <label for="avioprevoznik">Авиопревозник</label><br>
+    <input id="avioprevoznik" type="text"><br><br>
+    <label for="do">До</label><br>
+    <input id="do" type="text"><br><br>
+    <label for="datumOd">Датум од</label><br>
+    <input id="datumOd" type="text"><br><br>
+    <label for="datumDo">Датум до</label><br>
+    <input id="datumDo" type="text"><br><br>
+    <span>Категорија</span><br>
+    <select id="klasa">
+        <option>Бизнис</option>
+        <option>Економска</option>
+    </select>
+</div>
+
+<script type="text/javascript">
+    $("#search-results").hide();
+
+    $("#modal").dialog({
+        autoOpen: false,
+        modal: true,
+        draggable: false,
+        width: 400,
+        title: "Create new flight",
+        resizable: false,
+        buttons: {
+            "Додади": function () {
+                var code = $("#shifra").val();
+                var company = $("#avioprevoznik").val();
+                var city = $("#do").val();
+                var klasa = $("#klasa").find("option:selected").text();
+                var datumOd = $("#datumOd").val();
+                var datumDo = $("#datumDo").val();
+                $("#flights-table").append("<tr>" +
+                    "<td>" + code + "</td>" +
+                    "<td>" + company + "</td>" +
+                    "<td>" + city + "</td>" +
+                    "<td>" + klasa + "</td>" +
+                    "<td>" + datumOd + "</td>" +
+                    "<td>" + datumDo + "</td>" +
+                    "</tr>");
+                clearFields();
+                parseToJSON();
+                $(this).dialog("close");
+            },
+            "Откажи": function () {
+                clearFields();
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    function checkStatus() {
+        var shifra = $("#shifra").val();
+        var avioprevoznik = $("#avioprevoznik").val();
+        var destinacija = $("#do").val();
+        var datumOd = $("#datumOd").val();
+        var datumDo = $("#datumDo").val();
+        console.log(datumOd + " " + datumDo);
+
+        if (shifra.length < 1 || avioprevoznik.length < 1 || destinacija.length < 1
+            || datumOd.length < 1 || datumDo.length < 1) {
+            $(":button:contains('Додади')").prop("disabled", true).addClass("ui-state-disabled");
+            $(".check").show();
+            $(".validate").hide();
+            $("#modal").dialog("open");
+        } else {
+            $(".check").hide();
+            if (validatePassword(shifra)) {
+                $(".validate").hide();
+                $(":button:contains('Додади')").prop("disabled", false).removeClass("ui-state-disabled");
+            } else
+                $(".validate").show();
+            $("#modal").dialog("open");
+        }
+    }
+
+    function clearFields() {
+        $("#shifra").val("");
+        $("#avioprevoznik").val("");
+        $("#do").val("");
+        $("#datumOd").val("").datepicker("option", "maxDate", null);
+        $("#datumDo").val("").datepicker("option", "minDate", null);
+    }
+
+    function validatePassword(password) {
+        return $.isNumeric(password);
+    }
+
+    function getDate(element) {
+        return $.datepicker.parseDate("mm/dd/yy", element.value);
+    }
+
+    $.widget("custom.catcomplete", $.ui.autocomplete, {
+        _create: function () {
+            this._super();
+            this.widget().menu("option", "items", "> :not(.ui-autocomplete-category)");
+        },
+        _renderMenu: function (ul, items) {
+            var that = this,
+                currentCategory = "";
+            $.each(items, function (index, item) {
+                var li;
+                if (item.category != currentCategory) {
+                    ul.append("<li class='ui-autocomplete-category'><b>" + item.category + "</b></li>");
+                    currentCategory = item.category;
+                }
+                li = that._renderItemData(ul, item);
+                if (item.category) {
+                    li.attr("aria-label", item.category + " : " + item.label);
+                }
+            });
+        }
+    });
+
+    function parseToJSON() {
+        var data = [];
+        $.each($("tbody").find("> tr"), function (index, object) {
+            var city = $(object).find("td:nth-child(3)").html();
+            var company = $(object).find("td:nth-child(2)").html();
+            var category = $(object).find("td:nth-child(4)").html();
+            data.push({
+                label: city + " - " + company,
+                category: category
+            });
+        });
+        console.log(data);
+        $("#let").catcomplete({
+            source: data,
+            delay: 0
+        });
+    }
+
+    $(document).ready(function () {
+        $(".validate").hide();
+
+        parseToJSON();
+
+        $("#dodadi-let").on("click", function () {
+            $("#modal").dialog("open");
+            checkStatus();
+        });
+
+
+        $("#modal").on("change keyup", function () {
+            checkStatus();
+        });
+
+        $("#rezerviraj-let").on("click", function () {
+            $("#let").val("");
+            $("#datum-od").val("").datepicker("option", "maxDate", null);
+            $("#datum-do").val("").datepicker("option", "minDate", null);
+        });
+
+        var from = $("#datum-od").datepicker().on("change", function () {
+            to.datepicker("option", "minDate", getDate(this));
+        });
+
+        var to = $("#datum-do").datepicker().on("change", function () {
+            from.datepicker("option", "maxDate", getDate(this));
+        });
+
+        var Od = $("#datumOd").datepicker().on("change", function () {
+            Do.datepicker("option", "minDate", getDate(this));
+        });
+
+        var Do = $("#datumDo").datepicker().on("change", function () {
+            Od.datepicker("option", "maxDate", getDate(this));
+        });
+    });
+</script>
+</body>
+</html>

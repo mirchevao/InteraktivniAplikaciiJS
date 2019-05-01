@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework Counter | Krstev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        * {
+            font-family: "Source Code Pro", "DejaVu Sans Mono", monospace;
+            font-size: 1.3em;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        div {
+            line-height: 550px;
+            text-align: center;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<div id="counter">
+    <span id="hour"></span>
+    :
+    <span id="min"></span>
+    :
+    <span id="sec"></span>
+</div>
+
+<script type="text/javascript">
+    function addLeadingZero(number) { // adds only one 0 :)
+        var string = number + "";
+        while (string.length < 2)  // if there is not a leading zero
+            string = "0" + string;  // add one :)
+        return string;
+    }
+
+    function showTime() {
+        var currentDate = new Date();  // current date [hours, minutes, seconds]
+        var deadline = new Date();  // deadline date [hours, minutes, seconds]
+        var timeLeft = new Date(); // timeLeft date [hours, minutes, seconds]
+        deadline.setHours(23, 59, 59);  // set the deadline to 23:59:59
+        timeLeft.setHours(deadline.getHours() - currentDate.getHours(),  // set the timeLeft as a subtraction of deadline and current time
+            deadline.getMinutes() - currentDate.getMinutes(),
+            deadline.getSeconds() - currentDate.getSeconds());
+
+        document.getElementById("hour").innerHTML = addLeadingZero(timeLeft.getHours()).toString();
+        document.getElementById("min").innerHTML = addLeadingZero(timeLeft.getMinutes()).toString();
+        document.getElementById("sec").innerHTML = addLeadingZero(timeLeft.getSeconds()).toString();
+
+        setTimeout("showTime()", 1000);  // call the function for 1000ms (1sec)
+    }
+
+    showTime();
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forma za prijavuvanje | Krstev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: block;
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        span {
+            display: inline-block;
+            width: 110px;
+        }
+
+        span.radioSpan {
+            width: 60px;
+        }
+
+        div {
+            margin-bottom: 10px;
+        }
+
+        input[name] {
+            padding: 2px;
+        }
+
+        div#error {
+            font-size: 20px;
+            color: #FF0000;
+        }
+    </style>
+</head>
+<body>
+<h1>Форма за пријавување на X-Factor</h1>
+<form>
+    <div>
+        <label for="ime"></label><span>Име</span>
+        <input id="ime" type="text">
+    </div>
+
+    <div>
+        <label for="umetnickoIme"><span>Уметничко име</span></label>
+        <input id="umetnickoIme" type="text">
+    </div>
+
+    <div>
+        <span>Пол</span>
+        <input id="polM" type="radio" name="pol" value="Машки" checked><span class="radioSpan">Машки</span>
+        <input id="polZ" type="radio" name="pol" value="Женски"><span class="radioSpan">Женски</span>
+    </div>
+
+    <div>
+        <span>Жанр:</span>
+        <select id="zanr">
+            <option value="Classical Music">Classical Music</option>
+            <option value="Pop">Pop</option>
+            <option value="RnB">RnB</option>
+            <option value="Hip Hop" selected>Hip Hop</option>
+            <option value="Rock">Rock</option>
+        </select>
+    </div>
+
+    <div>
+        <input type="button" name="submit" value="Пријави се" onclick="validate()">
+    </div>
+
+    <div id="error">
+
+    </div>
+</form>
+
+<script type="text/javascript">
+    function validate() {
+        document.getElementById("error").innerHTML = "";  // remove the innerHTML if previously was added
+        var name = document.getElementById("ime").value;
+        var nickname = document.getElementById("umetnickoIme").value;
+        var pol = document.querySelector('input[name="pol"]:checked').value;
+        var e = document.getElementById("zanr");
+        var value = e.options[e.selectedIndex].value;
+        if (name.length !== 0 && nickname.length !== 0)
+            alert(name.toString() + " " + nickname.toString() + ", " + pol + ", " + value);
+        else
+            document.getElementById("error").innerHTML = "Сите полиња се задолжителни";
+    }
+</script>
+</body>
+</html>

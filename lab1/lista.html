@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista | Krstev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .urlBold {
+            font-weight: bold;
+            color: #0000FF;
+        }
+
+        ul {
+            padding-top: 10px;
+            display: block;
+            -webkit-padding-start: 40px;
+            width: 500px;
+            margin: 0 auto;
+            margin-bottom: 10px;
+        }
+
+        ol {
+            display: block;
+            -webkit-padding-start: 40px;
+        }
+
+        #change {
+            display: block;
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        input[name="Change"] {
+            margin-right: 50px;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+<ul id="list">
+    <li>Logo-Photo</li>
+
+    <ol type="I">
+        <li>url - thumbnail: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+        <li>url-icon: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+        <li>url-default: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+    </ol>
+
+    <li>Header-Photo</li>
+
+
+    <ol type="I">
+        <li>url - thumbnail: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+        <li>url-icon: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+        <li>url-default: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+    </ol>
+
+
+    <li>Footer-Photo</li>
+
+    <ol type="I">
+        <li>url - thumbnail: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+        <li>url-icon: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+        <li>url-default: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+    </ol>
+
+    <li>Main-Photo</li>
+
+    <ol type="I">
+        <li>url - thumbnail: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+        <li>ur-icon: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+        <li>url-default: www.sth.com/GAVassdfSJFKBAFsadfdsg</li>
+    </ol>
+</ul>
+
+<div id="change">
+    <input type="button" name="Change" value="Change">
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("li").addClass("urlBold");
+        $('input[name="Change"]').click(function () {
+            $("ol li").css("color", "#000000").css("font-weight", "normal");
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book recommendation | Krstev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/sunny/jquery-ui.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .input {
+            display: inline-block;
+            margin-left: 10px;
+            border: 2px dotted #7b7b7b;
+            width: 300px;
+            height: 24px;
+        }
+
+        .text {
+            display: inline-block;
+            width: 120px;
+        }
+
+        #content div {
+            padding: 10px;
+        }
+
+        #content {
+            display: block;
+            width: 500px;
+            margin: 0 auto;
+            font-size: 20px;
+            padding-top: 20px;
+        }
+
+        #button {
+            padding: 5px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<!-- Како шаблон е искористен Modal Panel (Режимски прозорец). Овој шаблон е најсоодветен
+     атоа што барањата за интерфејсот се јасно дефинирани и бараат да има имплементирано
+     копче на кое при кликнување корисникот треба да има можност да внесе податоци а потоа
+     истите да се прикажат на страницата. Тоа нѐ наведува на овој шаблон
+-->
+<div id="content">
+    <div>
+        <span class="text">Наслов: </span> <span id="inputTitle" class="input"></span>
+    </div>
+    <div>
+        <span class="text">Автор: </span> <span id="inputAuthor" class="input"></span>
+    </div>
+    <div>
+        <span class="text">Коментар: </span> <span id="inputComment" class="input"></span>
+    </div>
+    <button id="button" type="button" name="addBook" value="Add Book">Add Book</button>
+</div>
+
+<div id="dialog">
+    <div>
+        <div>
+            <input id="title" type="text" name="enterTitle" placeholder="Put title here">
+        </div>
+        <div>
+            <br>
+            <input id="author" type="text" name="enterAuthor" placeholder="Put author here">
+        </div>
+        <div>
+            <br>
+            <input id="comment" type="text" name="enterComment" placeholder="Put comment here">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#dialog").dialog({
+            autoOpen: false,
+            draggable: false,
+            modal: true,
+            title: "Enter the values",
+            buttons: {
+                "Add": function () {
+                    $("#inputTitle").html($("#title").val());
+                    $("#inputAuthor").html($("#author").val());
+                    $("#inputComment").html($("#comment").val());
+                    $(this).dialog("close");
+                }
+            },
+            closeOnEscape: true
+        });
+        $("#button").click(function () {
+            $("#dialog").dialog("open");
+        });
+    });
+</script>
+</body>
+</html>

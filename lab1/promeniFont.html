@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promena na font | Krstev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #text, #fontChanger {
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+
+        #fontChanger {
+            background-color: #09DEDC;
+            margin-top: 10px;
+            margin-left: 10px;
+            padding-bottom: 10px;
+            width: 350px;
+            border: 1px solid #000000;
+        }
+
+        #naslov {
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        input {
+            margin-right: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
+</head>
+<body>
+<div id="fontChanger">
+    <h2 id="naslov">
+        Големина на фонт:
+    </h2>
+
+    <input type="button" name="izbor" value="Почетна">
+    <input type="button" name="izbor" value="Зголеми">
+    <input type="button" name="izbor" value="Намали">
+</div>
+
+<div id="text">
+    <h1>How to connect to Internet</h1>
+    <div>
+        To connect to the Internet, you'll need an Internet service provider (ISP) and some hardware: ISP. An ISP is a
+        company that gives you access to the Internet. You sign up for an account with an ISP just as you do for
+        telephone
+        service or utilities. ISPs are usually phone companies (for a DSL or fiber optic connection) or TV providers
+        (for a
+        cable or satellite connection)
+    </div>
+    <br>
+    <div>
+        Hardware. For a broadband connection, such as DSL, fiber optic or cable you'll need a broadband modem. This
+        might be
+        included as part of the start-up hardware from your ISP when you sign up for a broadband account. If you plan to
+        share Internet access with multiple PCs by using a home network, you'll also need a router.
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var pocetnaGolemina = parseInt($("#text").css("font-size"), 10);
+        $('input[name="izbor"]').click(function () {
+            var golemina = parseInt($("#text").css("font-size"), 10);
+            if (this.value === "Почетна")
+                $("#text").animate({
+                    fontSize: pocetnaGolemina
+                }, 800);
+            else if (this.value === "Зголеми") {
+                $("#text").animate({
+                    fontSize: golemina * 1.5
+                }, 800);
+            }
+            else if (this.value === "Намали")
+                $("#text").animate({
+                    fontSize: golemina / 1.5
+                }, 800);
+        });
+    })
+</script>
+</body>
+</html>

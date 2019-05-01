@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zadaca 1 | Krstev</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        * {
+            font-family: Verdana, serif;
+        }
+
+        h1 {
+            margin-top: 0 !important;
+        }
+
+        input {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            width: 100%;
+            height: auto;
+            min-height: 100px;
+            display: block;
+            margin-bottom: 10px;
+            background: #A9F5BC;
+
+        }
+
+        .container {
+            width: 400px;
+            height: 400px;
+            padding: 20px;
+            /*overflow: scroll;*/
+        }
+
+        .navbar, .buttons {
+            width: 400px;
+            padding: 20px;
+            background: #A9D0F5;
+        }
+
+        .buttons {
+            text-align: center;
+        }
+
+        .buttons button {
+            width: 180px !important;
+        }
+
+        #sent_items {
+            height: 100%;
+            /*overflow: scroll;*/
+
+        }
+
+        .nav {
+            /*position: relative;*/
+            vertical-align: top;
+            width: auto;
+            height: 40px;
+            padding: 8px;
+            font-size: 22px;
+            color: white;
+            text-align: center;
+            margin-right: 10px !important;
+            background: #0174DF;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+            border: 0;
+            border-bottom: 2px solid #e2b607;
+            -webkit-box-shadow: inset 0 -2px #e2b607;
+            box-shadow: inset 0 -2px #e2b607;
+
+        }
+
+        .button {
+            position: relative;
+            vertical-align: top;
+            width: auto;
+            height: 40px;
+            padding: 8px;
+            font-size: 22px;
+            color: white;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+            background: #f1c40f;
+            border: 0;
+            border-bottom: 2px solid #e2b607;
+            cursor: pointer;
+            -webkit-box-shadow: inset 0 -2px #e2b607;
+            box-shadow: inset 0 -2px #e2b607;
+
+        }
+
+        #send {
+            background: #64CB42;
+            border-bottom: 2px solid #045FB4;
+            -webkit-box-shadow: inset 0 -2px #45862F;
+            box-shadow: inset 0 -2px #45862F;
+        }
+
+        .dialog {
+            padding: 5px !important;
+            min-width: 330px !important;
+
+        }
+
+        #content {
+            min-height: 100px;
+            width: 290px !important;
+            max-width: 290px !important;
+            margin: 5px;
+
+        }
+
+        #error, #error2 {
+            color: red;
+            display: none;
+            margin-bottom: 5px !important;
+        }
+
+        #sent, #email, #done {
+            border-bottom: 2px solid #045FB4;
+            -webkit-box-shadow: inset 0 -2px #045FB4;
+            box-shadow: inset 0 -2px #045FB4;
+            margin-right: 10px;
+        }
+
+        #done_end {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .passed {
+            background: #BDBDBD;
+        }
+
+        .active {
+            background: #FF8000;
+        }
+
+        .pending {
+            background: #81DAF5;
+        }
+
+        #feedback {
+            font-size: 1.4em;
+        }
+
+        #selectable .ui-selecting {
+            background: #FECA40;
+        }
+
+        #selectable .ui-selected {
+            background: #F39814;
+            color: white;
+        }
+
+        #selectable {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            min-width: 200px !important;
+            overflow: scroll;
+        }
+
+        #selectable li {
+            margin: 3px;
+            padding: 0.4em;
+            font-size: 1.4em;
+            height: auto;
+            min-width: 200px !important;
+        }
+
+        .no-close {
+            display: none !important;
+        }
+
+        .error-msg {
+            color: #FF0000;
+            font-weight: bold;
+        }
+
+        .button-left {
+            float: left !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="wizard_tab" id="compose_message">
+        <h1><b>New message:</b></h1>
+        <span>To:</span> <input type="text" name="to" id="to"/>
+        <span>Cc:</span> <input type="text" name="cc" id="cc"/>
+        <span>Subject:</span> <input type="text" name="subject" id="subject"/>
+        <span>Content:</span><span class="content"></span>
+        <button class="button" id="insert2">Insert</button>
+        <button class="button" id="send">Send</button>
+    </div>
+</div>
+
+<div id="modal1">
+    <span class="error-msg">Passwords error!</span><br>
+    <label for="pass">New Password:</label> <br>
+    <input id="pass" type="password">
+    <label for="repeat-pass">Repeat Password:</label> <br>
+    <input id="repeat-pass" type="password">
+</div>
+
+<div id="modal2">
+    <span>To:&nbsp;</span> <span id="toMail"></span> <br>
+    <span>Subject:&nbsp;</span> <span id="mailSubject"></span> <br>
+    <span>CC:&nbsp;</span> <span id="ccMail"></span> <br> <br>
+    <label for="mailContent">Content:</label> <br>
+    <textarea id="mailContent" rows="8" cols="35"></textarea>
+</div>
+
+<div id="modal3">
+    <span class="error-msg">Passwords error!</span><br>
+    <label for="password">Password:</label> <br>
+    <input id="password" type="password">
+</div>
+</body>
+
+<script type="text/javascript">
+    var password;
+
+    function checkValidity(pass, otherPass) {
+        if (pass !== otherPass)
+            return false;
+        if (pass.length < 6)
+            return false;
+        return /[`!@#$%^&*()\-_=+/{\[\]}|\\;:'",.?]/.test(pass);  // regexp for special chars
+    }
+
+    $("#modal1").dialog({
+        autoOpen: false,
+        classes: {
+            "ui-dialog-titlebar-close": "no-close"
+        },
+        modal: true,
+        resizable: false,
+        closable: false,
+        draggable: false,
+        closeOnEscape: false,
+        title: "Set your password",
+        buttons: {
+            "Ok": function () {
+                password = $("#pass").val();
+                var repeatPassword = $("#repeat-pass").val();
+                if (checkValidity(password, repeatPassword)) {
+                    $("#pass").val("");
+                    $("#repeat-pass").val("");
+                    $("#modal1").find(".error-msg").hide();
+                    $(this).dialog("close");
+                } else
+                    $("#modal1").find(".error-msg").show();
+            }
+        }
+    });
+
+    $("#modal2").dialog({
+        classes: {
+            "ui-dialog-titlebar-close": "no-close",
+            "ui-dialog-buttonset": "button-left"
+        },
+        modal: true,
+        autoOpen: false,
+        resizable: false,
+        closable: false,
+        draggable: false,
+        closeOnEscape: false,
+        title: "Message Content",
+        buttons: {
+            "Insert": function () {
+                var content = $("#mailContent").val();
+                $(".content").html(content);
+                $("#mailContent").val("");
+                $(this).dialog("close");
+            },
+            "Clear": function () {
+                $("#mailContent").val("");
+            }
+        }
+    });
+
+    $("#modal3").dialog({
+        classes: {
+            "ui-dialog-titlebar-close": "no-close"
+        },
+        modal: true,
+        autoOpen: false,
+        resizable: false,
+        closable: false,
+        draggable: false,
+        closeOnEscape: false,
+        title: "Password",
+        buttons: {
+            "Ok": function () {
+                var pass = $("#password").val();
+                if(checkValidity(password, pass)) {
+                    $("#modal3").find(".error-msg").hide();
+                    $("#password").val("");
+                    $("#to").val("");
+                    $("#cc").val("");
+                    $("#subject").val("");
+                    $(".content").html("");
+                    $(this).dialog("close");
+                } else
+                    $("#modal3").find(".error-msg").show();
+
+            }
+        }
+    });
+
+    jQuery(document).ready(function () {
+        $(".error-msg").hide();
+        $("#modal1").dialog("open");
+
+        $("#insert2").on("click", function () {
+            $("#modal2").dialog("open");
+        });
+
+        $("#send").on("click", function () {
+            $("#modal3").dialog("open");
+
+        });
+
+        $("#to").on("keyup", function () {
+            var content = $(this).val();
+            $("#toMail").html(content);
+        });
+
+        $("#cc").on("keyup", function () {
+            var content = $(this).val();
+            $("#ccMail").html(content);
+        });
+
+        $("#subject").on("keyup", function () {
+            var content = $(this).val();
+            $("#mailSubject").html(content);
+        });
+    });
+</script>
+</html>

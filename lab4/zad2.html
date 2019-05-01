@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Задача 2</title>
+    <link rel="stylesheet" href="jquery/jquery-ui.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+
+<p>Date: <input type="text" id="datepicker"></p>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            beforeShowDay: hideDates
+        });
+
+        function hideDates(date) {
+            var d = new Date(date.getYear(), date.getMonth() + 1, 0);
+            var days = d.getDate();
+            var day = date.getDate();
+            return [(days % 2 !== day % 2)];
+        }
+    });
+</script>
+
+</body>
+</html>

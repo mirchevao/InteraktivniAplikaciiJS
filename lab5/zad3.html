@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zadaca 3 | Krstev</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <style type="text/css">
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .labels {
+            display: inline-block;
+            margin: 3px;
+            width: 85px;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        #selectable-list {
+            list-style-type: none;
+        }
+
+        #selectable-list .ui-selecting {
+            background: #FECA40;
+        }
+
+        #selectable-list .ui-selected {
+            background: #F39814;
+            color: white;
+        }
+
+        .item {
+            padding: 5px;
+            margin: 2px;
+            border: 2px solid #dedede;
+            width: 250px;
+            cursor: pointer;
+        }
+
+        .inputs {
+            border: 2px solid #dedede;
+            width: 200px;
+        }
+
+        .if-not-valid {
+            color: #ff0000;
+        }
+
+        .not-valid-input {
+            border: 3px solid #ff0000;
+        }
+    </style>
+</head>
+<body>
+<div id="input-boxes">
+    <label for="name" class="labels">Name:</label>
+    <input id="name" class="inputs" type="text" placeholder="Name...">
+    <span class="if-not-valid">Insert a name</span>
+
+    <br>
+
+    <label for="surname" class="labels">Surname:</label>
+    <input id="surname" class="inputs" type="text" placeholder="Surname...">
+    <span class="if-not-valid">Insert a surname</span>
+
+    <br>
+
+    <label for="password" class="labels">Password:</label>
+    <input id="password" class="inputs" type="password" placeholder="Password">
+    <span class="if-not-valid">Insert a password</span>
+
+    <br>
+
+    <label for="date-of-birth" class="labels">DateOfBirth:</label>
+    <input id="date-of-birth" class="inputs" type="text" placeholder="Date Of Birth">
+    <span class="if-not-valid">Select a date</span>
+</div>
+
+<br><br>
+
+<span>Select your hobbies:</span>
+<br><br>
+
+<ul id="selectable-list">
+    <li class="item ui-widget-content">Gaming</li>
+    <li class="item ui-widget-content">Sports</li>
+    <li class="item ui-widget-content">Watching TV</li>
+    <li class="item ui-widget-content">Sleeping</li>
+    <li class="item ui-widget-content">Hiking</li>
+    <li class="item ui-widget-content">Skiing</li>
+    <li class="item ui-widget-content">Dancing</li>
+</ul>
+
+<br><br>
+
+<input id="add-info" type="button" value="Add my info" name="addInfo">
+
+
+<div id="dialog">
+    <span>Name:</span><span id="nameHere"></span><br><br>
+    <span>Surname:</span><span id="surnameHere"></span><br><br>
+    <span>Password:</span><span id="passwordHere"></span><br><br>
+    <span>DateOfBirth:</span><span id="date-of-birth-here"></span><br><br>
+    <span>Hobbies:</span><span id="hobbiesHere"></span><br><br>
+</div>
+
+<script type="text/javascript">
+    $("#dialog").dialog({
+        modal: false,
+        autoOpen: false,
+        title: "User Info",
+        draggable: false,
+        resizable: false
+    });
+
+    function validateInputs() {
+        var name = $("#name").val();
+        var surname = $("#surname").val();
+        var password = $("#password").val();
+        var dateOfBirth = $("#date-of-birth").val();
+        return !(name.length < 1 || surname.length < 1 || password.length < 1 || dateOfBirth.length < 1);
+    }
+
+    function clearInputs() {
+        $("#name").val("");
+        $("#surname").val("");
+        $("#password").val("");
+        $("#date-of-birth").val("");
+        $("#selectable-list").find(".ui-selected").removeClass("ui-selected");
+    }
+
+    $(document).ready(function () {
+        $(".if-not-valid").hide();
+
+        $("#date-of-birth").datepicker();
+
+        $("#selectable-list").selectable({
+            stop: function () {
+                var result = $("#hobbiesHere").empty();
+                $(".ui-selected").each(function () {
+                    result.append($(this).html() + ",");
+                });
+            }
+        });
+
+        $("#input-boxes").find("#name").on("change", function () {
+            var result = $("#nameHere").empty();
+            var value = $(this).val();
+            result.append(value);
+        });
+
+        $("#input-boxes").find("#surname").on("change", function () {
+            var result = $("#surnameHere").empty();
+            var value = $(this).val();
+            result.append(value);
+        });
+
+        $("#input-boxes").find("#password").on("change", function () {
+            var result = $("#passwordHere").empty();
+            var value = $(this).val();
+            result.append(value);
+        });
+
+        $("#input-boxes").find("#date-of-birth").on("change", function () {
+            var result = $("#date-of-birth-here").empty();
+            var value = $(this).val();
+            result.append(value);
+        });
+
+        $("#add-info").on("click", function () {
+            if (validateInputs()) {
+                $(".if-not-valid").hide();
+                $("#input-boxes").find("input").removeClass("not-valid-input");
+                var value = $("#hobbiesHere").html();
+                var result = $("#hobbiesHere").empty();
+                result.append(value.toString().substr(0, value.length - 1));
+                $("#dialog").dialog("open");
+                clearInputs();
+            } else {
+                $(".if-not-valid").show();
+                $("#input-boxes").find("input").addClass("not-valid-input");
+            }
+        });
+    });
+</script>
+</body>
+</html>

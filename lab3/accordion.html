@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Accordion | Kostadin Krstev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style type="text/css">
+        h3, h2 {
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        #groups {
+            width: 350px;
+            border: 1px solid #000000;
+            background-color: #ffdafe;
+        }
+
+        #accordion-header {
+            padding: 5px;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 1.6em;
+            height: 30px;
+            border-bottom: 1px solid #000000;
+        }
+
+        #accordion1 {
+            border-bottom: 1px solid #000000;
+        }
+
+        #accordion2, #accordion3 {
+            border-top: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+        }
+
+        #accordion1, #accordion2, #accordion3 {
+            padding: 2px 5px;
+            background-color: #fcffb0;
+            cursor: pointer;
+            font-style: italic;
+        }
+
+        .content {
+            background-color: #d1fff3;
+        }
+
+        .selected {
+            font-weight: bold;
+            background-color: #b5ffac !important;
+        }
+    </style>
+</head>
+<body>
+<div id="groups">
+    <h2 id="accordion-header">Custom accordion</h2>
+    <h3 id="accordion1" class="header">Accordion 1</h3>
+    <div class="content">
+        Cum lacta peregrinatione, omnes lanistaes acquirere altus, clemens buboes.
+        Solitudo volares, tanquam audax scutum. Pol, secundus boreas! Messis velox ducunt ad dexter guttus.
+    </div>
+    <h3 id="accordion2" class="header">Accordion 2</h3>
+    <div class="content">
+        Cum glos cantare, omnes buboes resuscitabo velox, neuter ventuses. Indexs cantare, tanquam varius verpa.
+        Ecce. Cur mensa unda? Pius fluctuss ducunt ad hippotoxota. Nobilis capios ducunt ad burgus.
+    </div>
+    <h3 id="accordion3" class="header">Accordion 3</h3>
+    <div class="content">
+        A falsis, vigil germanus zelus. Ubi est magnum tumultumque? Nunquam promissio secula. Aonides, finis, et contencio.
+        Gabalium de raptus diatria, visum clinias! Exsuls studere, tanquam emeritis ausus. Ubi est lotus danista?
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".content").hide();
+        $("#groups").find("h3").click(function () {
+            if ($(this).next().css("display") === "none") {
+                $(this).next().slideDown("slow");
+                $(this).addClass("selected");
+            }
+            else {
+                $(this).next().slideUp("slow");
+                $(this).removeClass("selected");
+            }
+        });
+    })
+</script>
+</body>
+</html>
